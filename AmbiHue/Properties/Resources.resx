@@ -136,4 +136,7 @@
   <data name="FormMain_CheckForConfiguration_Not_paired_yet_" xml:space="preserve">
     <value>Not paired yet!</value>
   </data>
+  <data name="FormMain_buttonAmbiStart_Click_The_selected_monitor_no_longer_exists_" xml:space="preserve">
+    <value>The selected monitor no longer exists.</value>
+  </data>
 </root>

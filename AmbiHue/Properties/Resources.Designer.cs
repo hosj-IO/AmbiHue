@@ -81,6 +81,15 @@ namespace AmbiHue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected monitor no longer exists..
+        /// </summary>
+        internal static string FormMain_buttonAmbiStart_Click_The_selected_monitor_no_longer_exists_ {
+            get {
+                return ResourceManager.GetString("FormMain_buttonAmbiStart_Click_The_selected_monitor_no_longer_exists_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration failed to be loaded. Halting application. Goodbye ....
         /// </summary>
         internal static string FormMain_CheckForConfiguration_Configuration_failed_to_be_loaded__Halting_application__Goodbye____ {
