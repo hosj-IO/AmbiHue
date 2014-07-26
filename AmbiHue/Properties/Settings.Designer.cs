@@ -25,7 +25,7 @@ namespace AmbiHue.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3dfc335e-402f-4690-a638-aac4718f8122")]
         public string Username {
             get {
                 return ((string)(this["Username"]));

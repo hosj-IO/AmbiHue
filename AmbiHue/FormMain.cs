@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using AmbiHue.Properties;
 using SharpHue;
@@ -17,6 +20,9 @@ namespace AmbiHue
         }
 
         public LightCollection LightCollection { get; set; }
+        private BackgroundWorker _backgroundWorker;
+        //Has to volatile to be accessible from an other thread
+        private volatile bool _isAmbiRunning;
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -30,6 +36,7 @@ namespace AmbiHue
                 helpToolStripMenuItem
             };
             ToggleControls(false, whitelistedToolStripMenuItems);
+            buttonAmbiStop.Enabled = false;
             CheckForConfiguration();
 
             //Set Monitor info;
@@ -188,6 +195,10 @@ namespace AmbiHue
 
         private void buttonAmbiStart_Click(object sender, EventArgs e)
         {
+            buttonAmbiStart.Enabled = false;
+            buttonAmbiStop.Enabled = true;
+            _backgroundWorker = new BackgroundWorker();
+
             var screens = GetMonitorInformation();
             Screen selectedScreen = null;
 
@@ -203,29 +214,45 @@ namespace AmbiHue
             //Extract the bitmap from the monitor.
             if (selectedScreen != null)
             {
-                var screenshot = ScreenShot(selectedScreen);
-                screenshot.Save("test.bmp");
-                var colorRgb = CalculateAverageColor(screenshot);
-                SetAllLightsToColorHsl(colorRgb);
+                _isAmbiRunning = true;
+                _backgroundWorker.DoWork += delegate
+                {
+                    do
+                    {
+                        StartAmbi(selectedScreen);
+                        Thread.Sleep(3000);
+                    } while (_isAmbiRunning);
 
+                };
+
+                _backgroundWorker.RunWorkerAsync();
             }
             else
             {
                 MessageBox.Show(Resources.FormMain_buttonAmbiStart_Click_The_selected_monitor_no_longer_exists_);
             }
+
+
+        }
+
+        private void StartAmbi(Screen selectedScreen)
+        {
+            var screenshot = ScreenShot(selectedScreen);
+            var colorRgb = CalculateAverageColor(screenshot);
+            LogToTextFile(colorRgb.ToString());
+            SetAllLightsToColorHsl(colorRgb);
+        }
+
+        private void LogToTextFile(string info)
+        {
+            File.AppendAllText("log.txt", info + Environment.NewLine);
         }
 
         private void SetAllLightsToColorHsl(Color color)
         {
-            //var lightStateBuilder = new LightStateBuilder().TurnOn().Hue((ushort) color.GetHue()).Saturation((byte) color.GetSaturation()).Brightness((byte) color.GetBrightness());
-            //Multiply by 100
-            var sat = color.GetSaturation() * 100;
-            var satByte = (byte)((int)sat);
-
-            var bri = color.GetBrightness() * 100;
-            var briByte = (byte)((int)bri);
-
-            var lightStateBuilder = new LightStateBuilder().TurnOn().Hue((ushort)color.GetHue()).Saturation(satByte).Brightness(briByte);
+            var tupleXYColor = Core.GetRGBtoXY(color);
+            
+            var lightStateBuilder = new LightStateBuilder().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2);
             foreach (var light in LightCollection)
             {
                 light.SetState(lightStateBuilder);
@@ -289,6 +316,15 @@ namespace AmbiHue
 
             return avgColor;
         }
+
+        private void buttonAmbiStop_Click(object sender, EventArgs e)
+        {
+            _isAmbiRunning = false;
+            buttonAmbiStart.Enabled = true;
+            buttonAmbiStop.Enabled = false;
+        }
+
+
 
     }
 }

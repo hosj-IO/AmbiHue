@@ -34,17 +34,18 @@
             this.bridgeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userOverviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.unpairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonOn = new System.Windows.Forms.Button();
             this.buttonOff = new System.Windows.Forms.Button();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.unpairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBoxMonitors = new System.Windows.Forms.ComboBox();
             this.buttonAmbiStart = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonAmbiStop = new System.Windows.Forms.Button();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +72,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -89,7 +90,7 @@
             // pairToolStripMenuItem
             // 
             this.pairToolStripMenuItem.Name = "pairToolStripMenuItem";
-            this.pairToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pairToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.pairToolStripMenuItem.Text = "&Pair";
             this.pairToolStripMenuItem.Click += new System.EventHandler(this.pairToolStripMenuItem_Click);
             // 
@@ -97,8 +98,20 @@
             // 
             this.userOverviewToolStripMenuItem.Enabled = false;
             this.userOverviewToolStripMenuItem.Name = "userOverviewToolStripMenuItem";
-            this.userOverviewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.userOverviewToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.userOverviewToolStripMenuItem.Text = "&User overview";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(144, 6);
+            // 
+            // unpairToolStripMenuItem
+            // 
+            this.unpairToolStripMenuItem.Name = "unpairToolStripMenuItem";
+            this.unpairToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.unpairToolStripMenuItem.Text = "&Unpair";
+            this.unpairToolStripMenuItem.Click += new System.EventHandler(this.unpairToolStripMenuItem_Click);
             // 
             // mainHelpToolStripMenuItem
             // 
@@ -153,18 +166,6 @@
             this.buttonOff.UseVisualStyleBackColor = true;
             this.buttonOff.Click += new System.EventHandler(this.buttonOff_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // unpairToolStripMenuItem
-            // 
-            this.unpairToolStripMenuItem.Name = "unpairToolStripMenuItem";
-            this.unpairToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.unpairToolStripMenuItem.Text = "&Unpair";
-            this.unpairToolStripMenuItem.Click += new System.EventHandler(this.unpairToolStripMenuItem_Click);
-            // 
             // comboBoxMonitors
             // 
             this.comboBoxMonitors.FormattingEnabled = true;
@@ -194,11 +195,24 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "To start Ambi:\r\nSelect a monitor.\r\nClick on start.";
             // 
+            // buttonAmbiStop
+            // 
+            this.buttonAmbiStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAmbiStop.ForeColor = System.Drawing.Color.DarkRed;
+            this.buttonAmbiStop.Location = new System.Drawing.Point(381, 128);
+            this.buttonAmbiStop.Name = "buttonAmbiStop";
+            this.buttonAmbiStop.Size = new System.Drawing.Size(95, 68);
+            this.buttonAmbiStop.TabIndex = 7;
+            this.buttonAmbiStop.Text = "Stop";
+            this.buttonAmbiStop.UseVisualStyleBackColor = true;
+            this.buttonAmbiStop.Click += new System.EventHandler(this.buttonAmbiStop_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 444);
+            this.Controls.Add(this.buttonAmbiStop);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonAmbiStart);
             this.Controls.Add(this.comboBoxMonitors);
@@ -235,6 +249,7 @@
         private System.Windows.Forms.ComboBox comboBoxMonitors;
         private System.Windows.Forms.Button buttonAmbiStart;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonAmbiStop;
 
     }
 }

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Username" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">3dfc335e-402f-4690-a638-aac4718f8122</Value>
     </Setting>
   </Settings>
 </SettingsFile>
