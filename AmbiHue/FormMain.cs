@@ -220,6 +220,7 @@ namespace AmbiHue
                     do
                     {
                         StartAmbi(selectedScreen);
+                        GC.Collect();
                         Thread.Sleep(3000);
                     } while (_isAmbiRunning);
 
@@ -239,7 +240,6 @@ namespace AmbiHue
         {
             var screenshot = ScreenShot(selectedScreen);
             var colorRgb = CalculateAverageColor(screenshot);
-            LogToTextFile(colorRgb.ToString());
             SetAllLightsToColorHsl(colorRgb);
         }
 
@@ -322,6 +322,16 @@ namespace AmbiHue
             _isAmbiRunning = false;
             buttonAmbiStart.Enabled = true;
             buttonAmbiStop.Enabled = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+        }
+
+        private void buttonColorLoop_Click(object sender, EventArgs e)
+        {
+
         }
 
 
