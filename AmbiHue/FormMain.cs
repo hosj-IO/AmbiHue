@@ -23,6 +23,7 @@ namespace AmbiHue
         private BackgroundWorker _backgroundWorker;
         //Has to volatile to be accessible from an other thread
         private volatile bool _isAmbiRunning;
+        private Color tempColor;
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -67,6 +68,7 @@ namespace AmbiHue
                     }
                 }
 
+            tabControlHuePages.Visible = isEnabled;
             buttonOn.Enabled = isEnabled;
             buttonOff.Enabled = isEnabled;
             buttonAmbiStart.Enabled = isEnabled;
@@ -88,6 +90,7 @@ namespace AmbiHue
                     }
                 }
 
+            tabControlHuePages.Visible = isEnabled;
             buttonOn.Enabled = isEnabled;
             buttonOff.Enabled = isEnabled;
             buttonAmbiStart.Enabled = isEnabled;
@@ -130,11 +133,23 @@ namespace AmbiHue
                 pairToolStripMenuItem.Enabled = false;
 
                 LightCollection = new LightCollection();
+                if (LightCollection.Count != 0)
+                {
+                    trackBarLights.Maximum = LightCollection.Count;
+                    trackBarLights.Minimum = 1;
+                    UpdateLightControlLabel();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void UpdateLightControlLabel()
+        {
+            labelLightsControl.Text = string.Format("There are {0} lights, you selected light: {1} - {2}", LightCollection.Count,
+                trackBarLights.Value, LightCollection[trackBarLights.Value].Name);
         }
 
         private void pairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -239,6 +254,7 @@ namespace AmbiHue
         private void StartAmbi(Screen selectedScreen)
         {
             var screenshot = ScreenShot(selectedScreen);
+
             var colorRgb = CalculateAverageColor(screenshot);
             SetAllLightsToColorHsl(colorRgb);
         }
@@ -251,12 +267,28 @@ namespace AmbiHue
         private void SetAllLightsToColorHsl(Color color)
         {
             var tupleXYColor = Core.GetRGBtoXY(color);
-            
+
             var lightStateBuilder = new LightStateBuilder().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2);
             foreach (var light in LightCollection)
             {
                 light.SetState(lightStateBuilder);
             }
+        }
+
+        static public Bitmap Copy(Bitmap srcBitmap, Rectangle section)
+        {
+            // Create the new bitmap and associated graphics object
+            Bitmap bmp = new Bitmap(section.Width, section.Height);
+            Graphics g = Graphics.FromImage(bmp);
+
+            // Draw the specified section of the source bitmap to the new one
+            g.DrawImage(srcBitmap, 0, 0, section, GraphicsUnit.Pixel);
+
+            // Clean up
+            g.Dispose();
+
+            // Return the bitmap
+            return bmp;
         }
 
         public Bitmap ScreenShot(Screen screen)
@@ -334,8 +366,42 @@ namespace AmbiHue
 
         }
 
+        private void trackBarLights_Scroll(object sender, EventArgs e)
+        {
+            UpdateLightControlLabel();
+        }
 
+        private void buttonLightColorSelect_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            var color = colorDialog1.Color;
+            if (color != Color.Black)
+            {
+                pictureBoxColorPreviewLight.BackColor = color;
+                tempColor = color;
+                buttonApplyColorLight.Enabled = true;
+            }
+        }
 
+        private void buttonApplyColorLight_Click(object sender, EventArgs e)
+        {
+            SetLightToColor(trackBarLights.Value, tempColor);
+            
+            buttonApplyColorLight.Enabled = false;
+        }
+
+        private void SetLightToColor(int id, Color color)
+        {
+            var tupleXYColor = Core.GetRGBtoXY(color);
+            var lightStateBuilder = new LightStateBuilder().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2);
+            LightCollection[id].SetState(lightStateBuilder);
+        }
+
+        private void buttonTurnLightOff_Click(object sender, EventArgs e)
+        {
+            var lightStateBuilder = new LightStateBuilder().TurnOff();
+            LightCollection[trackBarLights.Value].SetState(lightStateBuilder);
+        }
     }
 }
 //3dfc335e-402f-4690-a638-aac4718f8122

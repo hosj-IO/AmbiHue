@@ -50,9 +50,21 @@
             this.tabPageAmbi = new System.Windows.Forms.TabPage();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.buttonColorLoop = new System.Windows.Forms.Button();
+            this.tabPageLightControl = new System.Windows.Forms.TabPage();
+            this.tabPageCustom = new System.Windows.Forms.TabPage();
+            this.trackBarLights = new System.Windows.Forms.TrackBar();
+            this.labelLightsControl = new System.Windows.Forms.Label();
+            this.buttonLightColorSelect = new System.Windows.Forms.Button();
+            this.pictureBoxColorPreviewLight = new System.Windows.Forms.PictureBox();
+            this.labelPreviewColor = new System.Windows.Forms.Label();
+            this.buttonApplyColorLight = new System.Windows.Forms.Button();
+            this.buttonTurnLightOff = new System.Windows.Forms.Button();
             this.menuStripMain.SuspendLayout();
             this.tabControlHuePages.SuspendLayout();
             this.tabPageAmbi.SuspendLayout();
+            this.tabPageLightControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarLights)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorPreviewLight)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStripMain
@@ -216,6 +228,8 @@
             // tabControlHuePages
             // 
             this.tabControlHuePages.Controls.Add(this.tabPageAmbi);
+            this.tabControlHuePages.Controls.Add(this.tabPageLightControl);
+            this.tabControlHuePages.Controls.Add(this.tabPageCustom);
             this.tabControlHuePages.Location = new System.Drawing.Point(12, 101);
             this.tabControlHuePages.Name = "tabControlHuePages";
             this.tabControlHuePages.SelectedIndex = 0;
@@ -249,6 +263,98 @@
             this.buttonColorLoop.UseVisualStyleBackColor = true;
             this.buttonColorLoop.Click += new System.EventHandler(this.buttonColorLoop_Click);
             // 
+            // tabPageLightControl
+            // 
+            this.tabPageLightControl.Controls.Add(this.buttonTurnLightOff);
+            this.tabPageLightControl.Controls.Add(this.buttonApplyColorLight);
+            this.tabPageLightControl.Controls.Add(this.labelPreviewColor);
+            this.tabPageLightControl.Controls.Add(this.pictureBoxColorPreviewLight);
+            this.tabPageLightControl.Controls.Add(this.buttonLightColorSelect);
+            this.tabPageLightControl.Controls.Add(this.labelLightsControl);
+            this.tabPageLightControl.Controls.Add(this.trackBarLights);
+            this.tabPageLightControl.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLightControl.Name = "tabPageLightControl";
+            this.tabPageLightControl.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLightControl.Size = new System.Drawing.Size(558, 409);
+            this.tabPageLightControl.TabIndex = 1;
+            this.tabPageLightControl.Text = "Light Control";
+            this.tabPageLightControl.UseVisualStyleBackColor = true;
+            // 
+            // tabPageCustom
+            // 
+            this.tabPageCustom.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCustom.Name = "tabPageCustom";
+            this.tabPageCustom.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCustom.Size = new System.Drawing.Size(558, 409);
+            this.tabPageCustom.TabIndex = 2;
+            this.tabPageCustom.Text = "Custom";
+            this.tabPageCustom.UseVisualStyleBackColor = true;
+            // 
+            // trackBarLights
+            // 
+            this.trackBarLights.Location = new System.Drawing.Point(6, 6);
+            this.trackBarLights.Name = "trackBarLights";
+            this.trackBarLights.Size = new System.Drawing.Size(546, 45);
+            this.trackBarLights.TabIndex = 0;
+            this.trackBarLights.Scroll += new System.EventHandler(this.trackBarLights_Scroll);
+            // 
+            // labelLightsControl
+            // 
+            this.labelLightsControl.AutoSize = true;
+            this.labelLightsControl.Location = new System.Drawing.Point(6, 38);
+            this.labelLightsControl.Name = "labelLightsControl";
+            this.labelLightsControl.Size = new System.Drawing.Size(35, 13);
+            this.labelLightsControl.TabIndex = 1;
+            this.labelLightsControl.Text = "label2";
+            // 
+            // buttonLightColorSelect
+            // 
+            this.buttonLightColorSelect.Location = new System.Drawing.Point(6, 67);
+            this.buttonLightColorSelect.Name = "buttonLightColorSelect";
+            this.buttonLightColorSelect.Size = new System.Drawing.Size(75, 23);
+            this.buttonLightColorSelect.TabIndex = 10;
+            this.buttonLightColorSelect.Text = "Select Color";
+            this.buttonLightColorSelect.UseVisualStyleBackColor = true;
+            this.buttonLightColorSelect.Click += new System.EventHandler(this.buttonLightColorSelect_Click);
+            // 
+            // pictureBoxColorPreviewLight
+            // 
+            this.pictureBoxColorPreviewLight.Location = new System.Drawing.Point(86, 93);
+            this.pictureBoxColorPreviewLight.Name = "pictureBoxColorPreviewLight";
+            this.pictureBoxColorPreviewLight.Size = new System.Drawing.Size(28, 22);
+            this.pictureBoxColorPreviewLight.TabIndex = 11;
+            this.pictureBoxColorPreviewLight.TabStop = false;
+            // 
+            // labelPreviewColor
+            // 
+            this.labelPreviewColor.AutoSize = true;
+            this.labelPreviewColor.Location = new System.Drawing.Point(6, 93);
+            this.labelPreviewColor.Name = "labelPreviewColor";
+            this.labelPreviewColor.Size = new System.Drawing.Size(74, 13);
+            this.labelPreviewColor.TabIndex = 12;
+            this.labelPreviewColor.Text = "Preview color:";
+            // 
+            // buttonApplyColorLight
+            // 
+            this.buttonApplyColorLight.Enabled = false;
+            this.buttonApplyColorLight.Location = new System.Drawing.Point(6, 122);
+            this.buttonApplyColorLight.Name = "buttonApplyColorLight";
+            this.buttonApplyColorLight.Size = new System.Drawing.Size(75, 23);
+            this.buttonApplyColorLight.TabIndex = 13;
+            this.buttonApplyColorLight.Text = "Apply Color";
+            this.buttonApplyColorLight.UseVisualStyleBackColor = true;
+            this.buttonApplyColorLight.Click += new System.EventHandler(this.buttonApplyColorLight_Click);
+            // 
+            // buttonTurnLightOff
+            // 
+            this.buttonTurnLightOff.Location = new System.Drawing.Point(87, 121);
+            this.buttonTurnLightOff.Name = "buttonTurnLightOff";
+            this.buttonTurnLightOff.Size = new System.Drawing.Size(75, 23);
+            this.buttonTurnLightOff.TabIndex = 14;
+            this.buttonTurnLightOff.Text = "Turn off";
+            this.buttonTurnLightOff.UseVisualStyleBackColor = true;
+            this.buttonTurnLightOff.Click += new System.EventHandler(this.buttonTurnLightOff_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,6 +374,10 @@
             this.tabControlHuePages.ResumeLayout(false);
             this.tabPageAmbi.ResumeLayout(false);
             this.tabPageAmbi.PerformLayout();
+            this.tabPageLightControl.ResumeLayout(false);
+            this.tabPageLightControl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarLights)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorPreviewLight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,6 +407,15 @@
         private System.Windows.Forms.TabPage tabPageAmbi;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button buttonColorLoop;
+        private System.Windows.Forms.TabPage tabPageLightControl;
+        private System.Windows.Forms.TrackBar trackBarLights;
+        private System.Windows.Forms.TabPage tabPageCustom;
+        private System.Windows.Forms.Label labelLightsControl;
+        private System.Windows.Forms.Button buttonLightColorSelect;
+        private System.Windows.Forms.PictureBox pictureBoxColorPreviewLight;
+        private System.Windows.Forms.Label labelPreviewColor;
+        private System.Windows.Forms.Button buttonApplyColorLight;
+        private System.Windows.Forms.Button buttonTurnLightOff;
 
     }
 }
