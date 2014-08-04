@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -24,6 +23,7 @@ namespace AmbiHue
         //Has to volatile to be accessible from an other thread
         private volatile bool _isAmbiRunning;
         private Color tempColor;
+        private int timeInMiliSeconds;
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -44,6 +44,11 @@ namespace AmbiHue
             var screens = GetMonitorInformation();
             var screenNamesList = screens.Select(screen => screen.DeviceName).ToList();
             comboBoxMonitors.DataSource = screenNamesList;
+
+            //Set Trackbar options
+            trackBarAmbiSeconds.Minimum = 1;
+            trackBarAmbiSeconds.Maximum = 20;
+            UpdateLabelAmbiSeconds();
         }
 
         private IEnumerable<Screen> GetMonitorInformation()
@@ -230,13 +235,15 @@ namespace AmbiHue
             if (selectedScreen != null)
             {
                 _isAmbiRunning = true;
+                timeInMiliSeconds = trackBarAmbiSeconds.Value * 500;
+                trackBarAmbiSeconds.Enabled = !_isAmbiRunning;
                 _backgroundWorker.DoWork += delegate
                 {
                     do
                     {
                         StartAmbi(selectedScreen);
                         GC.Collect();
-                        Thread.Sleep(3000);
+                        Thread.Sleep(timeInMiliSeconds);
                     } while (_isAmbiRunning);
 
                 };
@@ -259,10 +266,12 @@ namespace AmbiHue
             SetAllLightsToColorHsl(colorRgb);
         }
 
-        private void LogToTextFile(string info)
-        {
-            File.AppendAllText("log.txt", info + Environment.NewLine);
-        }
+        /*
+                private void LogToTextFile(string info)
+                {
+                    File.AppendAllText("log.txt", info + Environment.NewLine);
+                }
+        */
 
         private void SetAllLightsToColorHsl(Color color)
         {
@@ -354,11 +363,7 @@ namespace AmbiHue
             _isAmbiRunning = false;
             buttonAmbiStart.Enabled = true;
             buttonAmbiStop.Enabled = false;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            colorDialog1.ShowDialog();
+            trackBarAmbiSeconds.Enabled = !_isAmbiRunning;
         }
 
         private void buttonColorLoop_Click(object sender, EventArgs e)
@@ -386,7 +391,7 @@ namespace AmbiHue
         private void buttonApplyColorLight_Click(object sender, EventArgs e)
         {
             SetLightToColor(trackBarLights.Value, tempColor);
-            
+
             buttonApplyColorLight.Enabled = false;
         }
 
@@ -401,6 +406,16 @@ namespace AmbiHue
         {
             var lightStateBuilder = new LightStateBuilder().TurnOff();
             LightCollection[trackBarLights.Value].SetState(lightStateBuilder);
+        }
+
+        private void trackBarAmbiSeconds_Scroll(object sender, EventArgs e)
+        {
+            UpdateLabelAmbiSeconds();
+        }
+
+        private void UpdateLabelAmbiSeconds()
+        {
+            labelAmbiSeconds.Text = string.Format("Time between changes: {0} ms", trackBarAmbiSeconds.Value * 500);
         }
     }
 }
