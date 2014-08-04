@@ -277,11 +277,8 @@ namespace AmbiHue
         {
             var tupleXYColor = Core.GetRGBtoXY(color);
 
-            var lightStateBuilder = new LightStateBuilder().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2);
-            foreach (var light in LightCollection)
-            {
-                light.SetState(lightStateBuilder);
-            }
+            new LightStateBuilder().ForAll().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2).Apply();
+           
         }
 
         static public Bitmap Copy(Bitmap srcBitmap, Rectangle section)
