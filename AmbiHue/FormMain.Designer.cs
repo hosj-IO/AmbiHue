@@ -48,6 +48,8 @@
             this.buttonAmbiStop = new System.Windows.Forms.Button();
             this.tabControlHuePages = new System.Windows.Forms.TabControl();
             this.tabPageAmbi = new System.Windows.Forms.TabPage();
+            this.labelAmbiSeconds = new System.Windows.Forms.Label();
+            this.trackBarAmbiSeconds = new System.Windows.Forms.TrackBar();
             this.tabPageLightControl = new System.Windows.Forms.TabPage();
             this.buttonTurnLightOff = new System.Windows.Forms.Button();
             this.buttonApplyColorLight = new System.Windows.Forms.Button();
@@ -59,15 +61,13 @@
             this.tabPageCustom = new System.Windows.Forms.TabPage();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.buttonColorLoop = new System.Windows.Forms.Button();
-            this.trackBarAmbiSeconds = new System.Windows.Forms.TrackBar();
-            this.labelAmbiSeconds = new System.Windows.Forms.Label();
             this.menuStripMain.SuspendLayout();
             this.tabControlHuePages.SuspendLayout();
             this.tabPageAmbi.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarAmbiSeconds)).BeginInit();
             this.tabPageLightControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorPreviewLight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarLights)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarAmbiSeconds)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStripMain
@@ -111,7 +111,7 @@
             // pairToolStripMenuItem
             // 
             this.pairToolStripMenuItem.Name = "pairToolStripMenuItem";
-            this.pairToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.pairToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pairToolStripMenuItem.Text = "&Pair";
             this.pairToolStripMenuItem.Click += new System.EventHandler(this.pairToolStripMenuItem_Click);
             // 
@@ -119,18 +119,19 @@
             // 
             this.userOverviewToolStripMenuItem.Enabled = false;
             this.userOverviewToolStripMenuItem.Name = "userOverviewToolStripMenuItem";
-            this.userOverviewToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.userOverviewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.userOverviewToolStripMenuItem.Text = "&User overview";
+            this.userOverviewToolStripMenuItem.Click += new System.EventHandler(this.userOverviewToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(144, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // unpairToolStripMenuItem
             // 
             this.unpairToolStripMenuItem.Name = "unpairToolStripMenuItem";
-            this.unpairToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.unpairToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.unpairToolStripMenuItem.Text = "&Unpair";
             this.unpairToolStripMenuItem.Click += new System.EventHandler(this.unpairToolStripMenuItem_Click);
             // 
@@ -255,6 +256,23 @@
             this.tabPageAmbi.Text = "Ambi Control";
             this.tabPageAmbi.UseVisualStyleBackColor = true;
             // 
+            // labelAmbiSeconds
+            // 
+            this.labelAmbiSeconds.AutoSize = true;
+            this.labelAmbiSeconds.Location = new System.Drawing.Point(217, 38);
+            this.labelAmbiSeconds.Name = "labelAmbiSeconds";
+            this.labelAmbiSeconds.Size = new System.Drawing.Size(35, 13);
+            this.labelAmbiSeconds.TabIndex = 11;
+            this.labelAmbiSeconds.Text = "label2";
+            // 
+            // trackBarAmbiSeconds
+            // 
+            this.trackBarAmbiSeconds.Location = new System.Drawing.Point(208, 6);
+            this.trackBarAmbiSeconds.Name = "trackBarAmbiSeconds";
+            this.trackBarAmbiSeconds.Size = new System.Drawing.Size(344, 45);
+            this.trackBarAmbiSeconds.TabIndex = 10;
+            this.trackBarAmbiSeconds.Scroll += new System.EventHandler(this.trackBarAmbiSeconds_Scroll);
+            // 
             // tabPageLightControl
             // 
             this.tabPageLightControl.Controls.Add(this.buttonTurnLightOff);
@@ -360,23 +378,6 @@
             this.buttonColorLoop.UseVisualStyleBackColor = true;
             this.buttonColorLoop.Click += new System.EventHandler(this.buttonColorLoop_Click);
             // 
-            // trackBarAmbiSeconds
-            // 
-            this.trackBarAmbiSeconds.Location = new System.Drawing.Point(208, 6);
-            this.trackBarAmbiSeconds.Name = "trackBarAmbiSeconds";
-            this.trackBarAmbiSeconds.Size = new System.Drawing.Size(344, 45);
-            this.trackBarAmbiSeconds.TabIndex = 10;
-            this.trackBarAmbiSeconds.Scroll += new System.EventHandler(this.trackBarAmbiSeconds_Scroll);
-            // 
-            // labelAmbiSeconds
-            // 
-            this.labelAmbiSeconds.AutoSize = true;
-            this.labelAmbiSeconds.Location = new System.Drawing.Point(217, 38);
-            this.labelAmbiSeconds.Name = "labelAmbiSeconds";
-            this.labelAmbiSeconds.Size = new System.Drawing.Size(35, 13);
-            this.labelAmbiSeconds.TabIndex = 11;
-            this.labelAmbiSeconds.Text = "label2";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -396,11 +397,11 @@
             this.tabControlHuePages.ResumeLayout(false);
             this.tabPageAmbi.ResumeLayout(false);
             this.tabPageAmbi.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarAmbiSeconds)).EndInit();
             this.tabPageLightControl.ResumeLayout(false);
             this.tabPageLightControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxColorPreviewLight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarLights)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarAmbiSeconds)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

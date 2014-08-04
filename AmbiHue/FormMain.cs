@@ -278,7 +278,7 @@ namespace AmbiHue
             var tupleXYColor = Core.GetRGBtoXY(color);
 
             new LightStateBuilder().ForAll().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2).Apply();
-           
+
         }
 
         static public Bitmap Copy(Bitmap srcBitmap, Rectangle section)
@@ -413,6 +413,12 @@ namespace AmbiHue
         private void UpdateLabelAmbiSeconds()
         {
             labelAmbiSeconds.Text = string.Format("Time between changes: {0} ms", trackBarAmbiSeconds.Value * 500);
+        }
+
+        private void userOverviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var formUserOverview = new FormUserOverview();
+            formUserOverview.ShowDialog();
         }
     }
 }
