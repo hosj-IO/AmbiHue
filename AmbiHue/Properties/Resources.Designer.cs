@@ -127,5 +127,24 @@ namespace AmbiHue.Properties {
                         "_do_this_now__Note__Without_pairing_this_program_cannot_do_anything_", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing ID.
+        /// </summary>
+        internal static string FormUserOverview_checkBoxChangeID_Click_Changing_ID {
+            get {
+                return ResourceManager.GetString("FormUserOverview_checkBoxChangeID_Click_Changing_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing the ID will cause problems with the program using the ID! Use caution! Do wish to change it?.
+        /// </summary>
+        internal static string FormUserOverview_checkBoxChangeID_Click_Changing_the_ID_will_cause_problems_with_the_program_using_the_ID__Use_caution__Do_wish_to_change_it_ {
+            get {
+                return ResourceManager.GetString("FormUserOverview_checkBoxChangeID_Click_Changing_the_ID_will_cause_problems_with_" +
+                        "the_program_using_the_ID__Use_caution__Do_wish_to_change_it_", resourceCulture);
+            }
+        }
     }
 }

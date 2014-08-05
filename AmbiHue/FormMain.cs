@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -23,6 +22,9 @@ namespace AmbiHue
         private BackgroundWorker _backgroundWorker;
         //Has to volatile to be accessible from an other thread
         private volatile bool _isAmbiRunning;
+        private Color tempColor;
+        private int timeInMiliSeconds;
+        private string Username;
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -43,6 +45,11 @@ namespace AmbiHue
             var screens = GetMonitorInformation();
             var screenNamesList = screens.Select(screen => screen.DeviceName).ToList();
             comboBoxMonitors.DataSource = screenNamesList;
+
+            //Set Trackbar options
+            trackBarAmbiSeconds.Minimum = 1;
+            trackBarAmbiSeconds.Maximum = 20;
+            UpdateLabelAmbiSeconds();
         }
 
         private IEnumerable<Screen> GetMonitorInformation()
@@ -67,6 +74,7 @@ namespace AmbiHue
                     }
                 }
 
+            tabControlHuePages.Visible = isEnabled;
             buttonOn.Enabled = isEnabled;
             buttonOff.Enabled = isEnabled;
             buttonAmbiStart.Enabled = isEnabled;
@@ -88,6 +96,7 @@ namespace AmbiHue
                     }
                 }
 
+            tabControlHuePages.Visible = isEnabled;
             buttonOn.Enabled = isEnabled;
             buttonOff.Enabled = isEnabled;
             buttonAmbiStart.Enabled = isEnabled;
@@ -128,13 +137,25 @@ namespace AmbiHue
                 //TODO Handle this better.
                 ToggleControls(true);
                 pairToolStripMenuItem.Enabled = false;
-
+                Username = username;
                 LightCollection = new LightCollection();
+                if (LightCollection.Count != 0)
+                {
+                    trackBarLights.Maximum = LightCollection.Count;
+                    trackBarLights.Minimum = 1;
+                    UpdateLightControlLabel();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void UpdateLightControlLabel()
+        {
+            labelLightsControl.Text = string.Format("There are {0} lights, you selected light: {1} - {2}", LightCollection.Count,
+                trackBarLights.Value, LightCollection[trackBarLights.Value].Name);
         }
 
         private void pairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -215,13 +236,15 @@ namespace AmbiHue
             if (selectedScreen != null)
             {
                 _isAmbiRunning = true;
+                timeInMiliSeconds = trackBarAmbiSeconds.Value * 500;
+                trackBarAmbiSeconds.Enabled = !_isAmbiRunning;
                 _backgroundWorker.DoWork += delegate
                 {
                     do
                     {
                         StartAmbi(selectedScreen);
                         GC.Collect();
-                        Thread.Sleep(3000);
+                        Thread.Sleep(timeInMiliSeconds);
                     } while (_isAmbiRunning);
 
                 };
@@ -239,24 +262,40 @@ namespace AmbiHue
         private void StartAmbi(Screen selectedScreen)
         {
             var screenshot = ScreenShot(selectedScreen);
+
             var colorRgb = CalculateAverageColor(screenshot);
             SetAllLightsToColorHsl(colorRgb);
         }
 
-        private void LogToTextFile(string info)
-        {
-            File.AppendAllText("log.txt", info + Environment.NewLine);
-        }
+        /*
+                private void LogToTextFile(string info)
+                {
+                    File.AppendAllText("log.txt", info + Environment.NewLine);
+                }
+        */
 
         private void SetAllLightsToColorHsl(Color color)
         {
             var tupleXYColor = Core.GetRGBtoXY(color);
-            
-            var lightStateBuilder = new LightStateBuilder().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2);
-            foreach (var light in LightCollection)
-            {
-                light.SetState(lightStateBuilder);
-            }
+
+            new LightStateBuilder().ForAll().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2).Apply();
+
+        }
+
+        static public Bitmap Copy(Bitmap srcBitmap, Rectangle section)
+        {
+            // Create the new bitmap and associated graphics object
+            Bitmap bmp = new Bitmap(section.Width, section.Height);
+            Graphics g = Graphics.FromImage(bmp);
+
+            // Draw the specified section of the source bitmap to the new one
+            g.DrawImage(srcBitmap, 0, 0, section, GraphicsUnit.Pixel);
+
+            // Clean up
+            g.Dispose();
+
+            // Return the bitmap
+            return bmp;
         }
 
         public Bitmap ScreenShot(Screen screen)
@@ -322,11 +361,7 @@ namespace AmbiHue
             _isAmbiRunning = false;
             buttonAmbiStart.Enabled = true;
             buttonAmbiStop.Enabled = false;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            colorDialog1.ShowDialog();
+            trackBarAmbiSeconds.Enabled = !_isAmbiRunning;
         }
 
         private void buttonColorLoop_Click(object sender, EventArgs e)
@@ -334,8 +369,58 @@ namespace AmbiHue
 
         }
 
+        private void trackBarLights_Scroll(object sender, EventArgs e)
+        {
+            UpdateLightControlLabel();
+        }
 
+        private void buttonLightColorSelect_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            var color = colorDialog1.Color;
+            if (color != Color.Black)
+            {
+                pictureBoxColorPreviewLight.BackColor = color;
+                tempColor = color;
+                buttonApplyColorLight.Enabled = true;
+            }
+        }
 
+        private void buttonApplyColorLight_Click(object sender, EventArgs e)
+        {
+            SetLightToColor(trackBarLights.Value, tempColor);
+
+            buttonApplyColorLight.Enabled = false;
+        }
+
+        private void SetLightToColor(int id, Color color)
+        {
+            var tupleXYColor = Core.GetRGBtoXY(color);
+            var lightStateBuilder = new LightStateBuilder().TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2);
+            LightCollection[id].SetState(lightStateBuilder);
+        }
+
+        private void buttonTurnLightOff_Click(object sender, EventArgs e)
+        {
+            var lightStateBuilder = new LightStateBuilder().TurnOff();
+            LightCollection[trackBarLights.Value].SetState(lightStateBuilder);
+        }
+
+        private void trackBarAmbiSeconds_Scroll(object sender, EventArgs e)
+        {
+            UpdateLabelAmbiSeconds();
+        }
+
+        private void UpdateLabelAmbiSeconds()
+        {
+            labelAmbiSeconds.Text = string.Format("Time between changes: {0} ms", trackBarAmbiSeconds.Value * 500);
+        }
+
+        private void userOverviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var formUserOverview = new FormUserOverview(Username);
+            formUserOverview.ShowDialog();
+        }
     }
 }
 //3dfc335e-402f-4690-a638-aac4718f8122
