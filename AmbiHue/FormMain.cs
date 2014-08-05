@@ -24,6 +24,7 @@ namespace AmbiHue
         private volatile bool _isAmbiRunning;
         private Color tempColor;
         private int timeInMiliSeconds;
+        private string Username;
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -136,7 +137,7 @@ namespace AmbiHue
                 //TODO Handle this better.
                 ToggleControls(true);
                 pairToolStripMenuItem.Enabled = false;
-
+                Username = username;
                 LightCollection = new LightCollection();
                 if (LightCollection.Count != 0)
                 {
@@ -417,7 +418,7 @@ namespace AmbiHue
 
         private void userOverviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var formUserOverview = new FormUserOverview();
+            var formUserOverview = new FormUserOverview(Username);
             formUserOverview.ShowDialog();
         }
     }

@@ -37,8 +37,6 @@
             this.labelDescName = new System.Windows.Forms.Label();
             this.labelDescCreateDate = new System.Windows.Forms.Label();
             this.labelDescDateLastUsed = new System.Windows.Forms.Label();
-            this.checkBoxChangeID = new System.Windows.Forms.CheckBox();
-            this.buttonSave = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonNew = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -116,31 +114,9 @@
             this.labelDescDateLastUsed.TabIndex = 8;
             this.labelDescDateLastUsed.Text = "Date last used:";
             // 
-            // checkBoxChangeID
-            // 
-            this.checkBoxChangeID.AutoSize = true;
-            this.checkBoxChangeID.Location = new System.Drawing.Point(375, 115);
-            this.checkBoxChangeID.Name = "checkBoxChangeID";
-            this.checkBoxChangeID.Size = new System.Drawing.Size(77, 17);
-            this.checkBoxChangeID.TabIndex = 10;
-            this.checkBoxChangeID.Text = "Change ID";
-            this.checkBoxChangeID.UseVisualStyleBackColor = true;
-            this.checkBoxChangeID.CheckedChanged += new System.EventHandler(this.checkBoxChangeID_CheckedChanged);
-            this.checkBoxChangeID.Click += new System.EventHandler(this.checkBoxChangeID_Click);
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Location = new System.Drawing.Point(375, 138);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 11;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(456, 138);
+            this.buttonDelete.Location = new System.Drawing.Point(375, 111);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonDelete.TabIndex = 12;
@@ -165,8 +141,6 @@
             this.ClientSize = new System.Drawing.Size(636, 409);
             this.Controls.Add(this.buttonNew);
             this.Controls.Add(this.buttonDelete);
-            this.Controls.Add(this.buttonSave);
-            this.Controls.Add(this.checkBoxChangeID);
             this.Controls.Add(this.labelDescDateLastUsed);
             this.Controls.Add(this.labelDescCreateDate);
             this.Controls.Add(this.labelDescName);
@@ -177,7 +151,7 @@
             this.Controls.Add(this.textBoxID);
             this.Controls.Add(this.listBoxUsers);
             this.Name = "FormUserOverview";
-            this.Text = "FormUserOverview";
+            this.Text = "User Overview";
             this.Load += new System.EventHandler(this.FormUserOverview_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -195,8 +169,6 @@
         private System.Windows.Forms.Label labelDescName;
         private System.Windows.Forms.Label labelDescCreateDate;
         private System.Windows.Forms.Label labelDescDateLastUsed;
-        private System.Windows.Forms.CheckBox checkBoxChangeID;
-        private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonNew;
     }
