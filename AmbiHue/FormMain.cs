@@ -79,6 +79,7 @@ namespace AmbiHue
             buttonOn.Enabled = isEnabled;
             buttonOff.Enabled = isEnabled;
             buttonAmbiStart.Enabled = isEnabled;
+            buttonColorLoop.Enabled = isEnabled;
         }
         private void ToggleControls(bool isEnabled, List<ToolStripMenuItem> whitelistedToolStripMenuItems)
         {
@@ -186,7 +187,7 @@ namespace AmbiHue
 
         private void TurnOffAllLights()
         {
-            new LightStateBuilder().ForAll().TurnOff();
+            new LightStateBuilder().ForAll().TurnOff().Apply();
         }
 
         private void buttonOn_Click(object sender, EventArgs e)
@@ -404,7 +405,7 @@ namespace AmbiHue
 
         private void buttonColorLoop_Click(object sender, EventArgs e)
         {
-
+            new LightStateBuilder().ForAll().TurnOn().Effect(LightEffect.ColorLoop).Apply();
         }
 
         private void trackBarLights_Scroll(object sender, EventArgs e)
