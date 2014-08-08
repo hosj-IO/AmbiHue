@@ -61,6 +61,10 @@
             this.tabPageCustom = new System.Windows.Forms.TabPage();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.buttonColorLoop = new System.Windows.Forms.Button();
+            this.searchForNewLightsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonSelectLights = new System.Windows.Forms.Button();
+            this.listBoxSelectedLights = new System.Windows.Forms.ListBox();
             this.menuStripMain.SuspendLayout();
             this.tabControlHuePages.SuspendLayout();
             this.tabPageAmbi.SuspendLayout();
@@ -101,6 +105,8 @@
             // 
             this.bridgeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pairToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.searchForNewLightsToolStripMenuItem,
             this.userOverviewToolStripMenuItem,
             this.toolStripSeparator1,
             this.unpairToolStripMenuItem});
@@ -111,7 +117,7 @@
             // pairToolStripMenuItem
             // 
             this.pairToolStripMenuItem.Name = "pairToolStripMenuItem";
-            this.pairToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pairToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.pairToolStripMenuItem.Text = "&Pair";
             this.pairToolStripMenuItem.Click += new System.EventHandler(this.pairToolStripMenuItem_Click);
             // 
@@ -119,19 +125,19 @@
             // 
             this.userOverviewToolStripMenuItem.Enabled = false;
             this.userOverviewToolStripMenuItem.Name = "userOverviewToolStripMenuItem";
-            this.userOverviewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.userOverviewToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.userOverviewToolStripMenuItem.Text = "&User overview";
             this.userOverviewToolStripMenuItem.Click += new System.EventHandler(this.userOverviewToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
             // 
             // unpairToolStripMenuItem
             // 
             this.unpairToolStripMenuItem.Name = "unpairToolStripMenuItem";
-            this.unpairToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.unpairToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.unpairToolStripMenuItem.Text = "&Unpair";
             this.unpairToolStripMenuItem.Click += new System.EventHandler(this.unpairToolStripMenuItem_Click);
             // 
@@ -200,7 +206,7 @@
             // 
             this.buttonAmbiStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonAmbiStart.ForeColor = System.Drawing.Color.Green;
-            this.buttonAmbiStart.Location = new System.Drawing.Point(107, 33);
+            this.buttonAmbiStart.Location = new System.Drawing.Point(107, 112);
             this.buttonAmbiStart.Name = "buttonAmbiStart";
             this.buttonAmbiStart.Size = new System.Drawing.Size(95, 68);
             this.buttonAmbiStart.TabIndex = 5;
@@ -221,7 +227,7 @@
             // 
             this.buttonAmbiStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonAmbiStop.ForeColor = System.Drawing.Color.DarkRed;
-            this.buttonAmbiStop.Location = new System.Drawing.Point(107, 107);
+            this.buttonAmbiStop.Location = new System.Drawing.Point(107, 186);
             this.buttonAmbiStop.Name = "buttonAmbiStop";
             this.buttonAmbiStop.Size = new System.Drawing.Size(95, 68);
             this.buttonAmbiStop.TabIndex = 7;
@@ -242,6 +248,8 @@
             // 
             // tabPageAmbi
             // 
+            this.tabPageAmbi.Controls.Add(this.listBoxSelectedLights);
+            this.tabPageAmbi.Controls.Add(this.buttonSelectLights);
             this.tabPageAmbi.Controls.Add(this.labelAmbiSeconds);
             this.tabPageAmbi.Controls.Add(this.trackBarAmbiSeconds);
             this.tabPageAmbi.Controls.Add(this.buttonAmbiStop);
@@ -378,6 +386,38 @@
             this.buttonColorLoop.UseVisualStyleBackColor = true;
             this.buttonColorLoop.Click += new System.EventHandler(this.buttonColorLoop_Click);
             // 
+            // searchForNewLightsToolStripMenuItem
+            // 
+            this.searchForNewLightsToolStripMenuItem.Name = "searchForNewLightsToolStripMenuItem";
+            this.searchForNewLightsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.searchForNewLightsToolStripMenuItem.Text = "Search for new lights";
+            this.searchForNewLightsToolStripMenuItem.Click += new System.EventHandler(this.searchForNewLightsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(181, 6);
+            // 
+            // buttonSelectLights
+            // 
+            this.buttonSelectLights.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectLights.ForeColor = System.Drawing.Color.DarkGoldenrod;
+            this.buttonSelectLights.Location = new System.Drawing.Point(107, 38);
+            this.buttonSelectLights.Name = "buttonSelectLights";
+            this.buttonSelectLights.Size = new System.Drawing.Size(95, 68);
+            this.buttonSelectLights.TabIndex = 12;
+            this.buttonSelectLights.Text = "Select Lights";
+            this.buttonSelectLights.UseVisualStyleBackColor = true;
+            this.buttonSelectLights.Click += new System.EventHandler(this.buttonSelectLights_Click);
+            // 
+            // listBoxSelectedLights
+            // 
+            this.listBoxSelectedLights.FormattingEnabled = true;
+            this.listBoxSelectedLights.Location = new System.Drawing.Point(208, 67);
+            this.listBoxSelectedLights.Name = "listBoxSelectedLights";
+            this.listBoxSelectedLights.Size = new System.Drawing.Size(185, 186);
+            this.listBoxSelectedLights.TabIndex = 13;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -442,6 +482,10 @@
         private System.Windows.Forms.Button buttonTurnLightOff;
         private System.Windows.Forms.TrackBar trackBarAmbiSeconds;
         private System.Windows.Forms.Label labelAmbiSeconds;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem searchForNewLightsToolStripMenuItem;
+        private System.Windows.Forms.Button buttonSelectLights;
+        private System.Windows.Forms.ListBox listBoxSelectedLights;
 
     }
 }

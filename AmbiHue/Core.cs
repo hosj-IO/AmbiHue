@@ -56,12 +56,12 @@ namespace AmbiHue
                 blue = (float)(normalizedToOne[2] / 12.92);
             }
 
-            var X = (float)(red * 0.649926 + green * 0.103455 + blue * 0.197109);
-            var Y = (float)(red * 0.234327 + green * 0.743075 + blue * 0.022598);
-            var Z = (float)(red * 0.0000000 + green * 0.053077 + blue * 1.035763);
+            var totalX = (float)(red * 0.649926 + green * 0.103455 + blue * 0.197109);
+            var totalY = (float)(red * 0.234327 + green * 0.743075 + blue * 0.022598);
+            var totalZ = (float)(red * 0.0000000 + green * 0.053077 + blue * 1.035763);
 
-            var x = X / (X + Y + Z);
-            var y = Y / (X + Y + Z);
+            var x = totalX / (totalX + totalY + totalZ);
+            var y = totalY / (totalX + totalY + totalZ);
             var xDouble = Convert.ToDouble(x);
             var yDouble = Convert.ToDouble(y);
 

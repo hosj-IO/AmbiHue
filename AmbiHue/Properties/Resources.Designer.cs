@@ -81,11 +81,30 @@ namespace AmbiHue.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No lights selected.
+        /// </summary>
+        internal static string FormMain_buttonAmbiStart_Click_No_lights_selected {
+            get {
+                return ResourceManager.GetString("FormMain_buttonAmbiStart_Click_No_lights_selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The selected monitor no longer exists..
         /// </summary>
         internal static string FormMain_buttonAmbiStart_Click_The_selected_monitor_no_longer_exists_ {
             get {
                 return ResourceManager.GetString("FormMain_buttonAmbiStart_Click_The_selected_monitor_no_longer_exists_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You didn&apos;t select any lights. By default, the application will use all lights used by your bridge. Do you wish to continue?.
+        /// </summary>
+        internal static string FormMain_buttonAmbiStart_Click_You_didn_t_select_any_lights__By_default__the_application_will_use_all_lights_used_by_your_bridge__Do_you_wish_to_continue_ {
+            get {
+                return ResourceManager.GetString("FormMain_buttonAmbiStart_Click_You_didn_t_select_any_lights__By_default__the_appl" +
+                        "ication_will_use_all_lights_used_by_your_bridge__Do_you_wish_to_continue_", resourceCulture);
             }
         }
         
@@ -125,6 +144,42 @@ namespace AmbiHue.Properties {
             get {
                 return ResourceManager.GetString("FormMain_CheckForConfiguration_The_Bridge_has_not_been_paired_yet__Do_you_wish_to" +
                         "_do_this_now__Note__Without_pairing_this_program_cannot_do_anything_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot delete currently used username..
+        /// </summary>
+        internal static string FormUserOverview_buttonDelete_Click_Cannot_delete_currently_used_username_ {
+            get {
+                return ResourceManager.GetString("FormUserOverview_buttonDelete_Click_Cannot_delete_currently_used_username_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot delete the currently used user..
+        /// </summary>
+        internal static string FormUserOverview_buttonDelete_Click_Cannot_delete_the_currently_used_user_ {
+            get {
+                return ResourceManager.GetString("FormUserOverview_buttonDelete_Click_Cannot_delete_the_currently_used_user_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not delete.
+        /// </summary>
+        internal static string FormUserOverview_buttonDelete_Click_Could_not_delete {
+            get {
+                return ResourceManager.GetString("FormUserOverview_buttonDelete_Click_Could_not_delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not delete user..
+        /// </summary>
+        internal static string FormUserOverview_buttonDelete_Click_Could_not_delete_user_ {
+            get {
+                return ResourceManager.GetString("FormUserOverview_buttonDelete_Click_Could_not_delete_user_", resourceCulture);
             }
         }
         

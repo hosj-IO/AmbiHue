@@ -58,12 +58,11 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\SharpHue-master\SharpHue-master\SharpHue\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\Downloads\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SharpHue, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -95,6 +94,12 @@
     <Compile Include="FormConfiguration.Designer.cs">
       <DependentUpon>FormConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLightSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLightSelect.Designer.cs">
+      <DependentUpon>FormLightSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormConfiguration.resx">
       <DependentUpon>FormConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLightSelect.resx">
+      <DependentUpon>FormLightSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

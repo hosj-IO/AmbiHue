@@ -19,13 +19,14 @@ namespace AmbiHue
         }
 
         public LightCollection LightCollection { get; set; }
+
         private BackgroundWorker _backgroundWorker;
         //Has to volatile to be accessible from an other thread
         private volatile bool _isAmbiRunning;
-        private Color tempColor;
-        private int timeInMiliSeconds;
-        private string Username;
-
+        private Color _tempColor;
+        private int _timeInMiliSeconds;
+        private string _username;
+        private List<Light> _selectedLightsAmbi;
         private void FormMain_Load(object sender, EventArgs e)
         {
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -137,7 +138,7 @@ namespace AmbiHue
                 //TODO Handle this better.
                 ToggleControls(true);
                 pairToolStripMenuItem.Enabled = false;
-                Username = username;
+                _username = username;
                 LightCollection = new LightCollection();
                 if (LightCollection.Count != 0)
                 {
@@ -180,11 +181,12 @@ namespace AmbiHue
 
         private void buttonOff_Click(object sender, EventArgs e)
         {
-            var lightStateBuilder = new LightStateBuilder().TurnOff();
-            foreach (var light in LightCollection)
-            {
-                light.SetState(lightStateBuilder);
-            }
+            TurnOffAllLights();
+        }
+
+        private void TurnOffAllLights()
+        {
+            new LightStateBuilder().ForAll().TurnOff();
         }
 
         private void buttonOn_Click(object sender, EventArgs e)
@@ -216,6 +218,17 @@ namespace AmbiHue
 
         private void buttonAmbiStart_Click(object sender, EventArgs e)
         {
+
+            if (_selectedLightsAmbi == null)
+            {
+                var dialogResult = MessageBox.Show(
+                     Resources.FormMain_buttonAmbiStart_Click_You_didn_t_select_any_lights__By_default__the_application_will_use_all_lights_used_by_your_bridge__Do_you_wish_to_continue_,
+                     Resources.FormMain_buttonAmbiStart_Click_No_lights_selected, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.No)
+                    return;
+
+            }
+
             buttonAmbiStart.Enabled = false;
             buttonAmbiStop.Enabled = true;
             _backgroundWorker = new BackgroundWorker();
@@ -232,19 +245,21 @@ namespace AmbiHue
                 }
             }
 
+
+
             //Extract the bitmap from the monitor.
             if (selectedScreen != null)
             {
                 _isAmbiRunning = true;
-                timeInMiliSeconds = trackBarAmbiSeconds.Value * 500;
+                _timeInMiliSeconds = trackBarAmbiSeconds.Value * 500;
                 trackBarAmbiSeconds.Enabled = !_isAmbiRunning;
                 _backgroundWorker.DoWork += delegate
                 {
                     do
                     {
-                        StartAmbi(selectedScreen);
+                        StartAmbi(selectedScreen, _selectedLightsAmbi);
                         GC.Collect();
-                        Thread.Sleep(timeInMiliSeconds);
+                        Thread.Sleep(_timeInMiliSeconds);
                     } while (_isAmbiRunning);
 
                 };
@@ -259,20 +274,43 @@ namespace AmbiHue
 
         }
 
-        private void StartAmbi(Screen selectedScreen)
+        private void StartAmbi(Screen selectedScreen, List<Light> selectedLightsAmbi)
         {
-            var screenshot = ScreenShot(selectedScreen);
-
-            var colorRgb = CalculateAverageColor(screenshot);
-            SetAllLightsToColorHsl(colorRgb);
+            var colorRgb = CalculateAverageColor(ScreenShot(selectedScreen));
+            if (selectedLightsAmbi == null)
+            {
+                if (colorRgb != Color.Black)
+                {
+                    SetAllLightsToColorHsl(colorRgb);
+                }
+                else
+                {
+                    TurnOffAllLights();
+                }
+            }
+            else
+            {
+                if (colorRgb != Color.Black)
+                {
+                    SetListLightsToColorHsl(colorRgb, selectedLightsAmbi);
+                }
+                else
+                {
+                    TurnOffListLights(selectedLightsAmbi);
+                }
+            }
         }
 
-        /*
-                private void LogToTextFile(string info)
-                {
-                    File.AppendAllText("log.txt", info + Environment.NewLine);
-                }
-        */
+        private void TurnOffListLights(List<Light> selectedLightsAmbi)
+        {
+            new LightStateBuilder().For(selectedLightsAmbi.ToArray()).TurnOn();
+        }
+
+        private void SetListLightsToColorHsl(Color color, List<Light> selectedLightsAmbi)
+        {
+            var tupleXYColor = Core.GetRGBtoXY(color);
+            new LightStateBuilder().For(selectedLightsAmbi.ToArray()).TurnOn().XYCoordinates(tupleXYColor.Item1, tupleXYColor.Item2).Apply();
+        }
 
         private void SetAllLightsToColorHsl(Color color)
         {
@@ -285,8 +323,8 @@ namespace AmbiHue
         static public Bitmap Copy(Bitmap srcBitmap, Rectangle section)
         {
             // Create the new bitmap and associated graphics object
-            Bitmap bmp = new Bitmap(section.Width, section.Height);
-            Graphics g = Graphics.FromImage(bmp);
+            var bmp = new Bitmap(section.Width, section.Height);
+            var g = Graphics.FromImage(bmp);
 
             // Draw the specified section of the source bitmap to the new one
             g.DrawImage(srcBitmap, 0, 0, section, GraphicsUnit.Pixel);
@@ -381,14 +419,14 @@ namespace AmbiHue
             if (color != Color.Black)
             {
                 pictureBoxColorPreviewLight.BackColor = color;
-                tempColor = color;
+                _tempColor = color;
                 buttonApplyColorLight.Enabled = true;
             }
         }
 
         private void buttonApplyColorLight_Click(object sender, EventArgs e)
         {
-            SetLightToColor(trackBarLights.Value, tempColor);
+            SetLightToColor(trackBarLights.Value, _tempColor);
 
             buttonApplyColorLight.Enabled = false;
         }
@@ -418,10 +456,39 @@ namespace AmbiHue
 
         private void userOverviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var formUserOverview = new FormUserOverview(Username);
+            var formUserOverview = new FormUserOverview(_username);
             formUserOverview.ShowDialog();
+        }
+
+        private void searchForNewLightsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LightCollection.Refresh();
+            if (LightCollection.Count != 0)
+            {
+                trackBarLights.Maximum = LightCollection.Count;
+                trackBarLights.Minimum = 1;
+                UpdateLightControlLabel();
+            }
+        }
+
+        private void buttonSelectLights_Click(object sender, EventArgs e)
+        {
+            listBoxSelectedLights.Items.Clear();
+
+            var formLightSelect = new FormLightSelect();
+            formLightSelect.ShowDialog();
+
+            _selectedLightsAmbi = formLightSelect.Lights;
+
+            listBoxSelectedLights.DataSource = _selectedLightsAmbi;
         }
     }
 }
 //3dfc335e-402f-4690-a638-aac4718f8122
 //TODO select which lamp is where and how many
+/*
+        private void LogToTextFile(string info)
+        {
+            File.AppendAllText("log.txt", info + Environment.NewLine);
+        }
+*/

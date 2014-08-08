@@ -9,7 +9,7 @@ namespace AmbiHue
 {
     public partial class FormUserOverview : Form
     {
-        private string _username;
+        private readonly string _username;
         public FormUserOverview(string username)
         {
             InitializeComponent();
@@ -56,12 +56,12 @@ namespace AmbiHue
                 }
                 else
                 {
-                    MessageBox.Show("Could not delete");
+                    MessageBox.Show(Resources.FormUserOverview_buttonDelete_Click_Could_not_delete_user_);
                 }
             }
             else
             {
-                MessageBox.Show("Cannot delete currently used username.");
+                MessageBox.Show(Resources.FormUserOverview_buttonDelete_Click_Cannot_delete_the_currently_used_user_);
             }
 
         }
