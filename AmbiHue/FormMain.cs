@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -252,13 +253,21 @@ namespace AmbiHue
             if (selectedScreen != null)
             {
                 _isAmbiRunning = true;
-                _timeInMiliSeconds = trackBarAmbiSeconds.Value * 500;
+                if (!checkBoxDisableDelay.Checked)
+                {
+                    _timeInMiliSeconds = trackBarAmbiSeconds.Value * 500;
+                }
+                else
+                {
+                    _timeInMiliSeconds = 0;
+                }
                 trackBarAmbiSeconds.Enabled = !_isAmbiRunning;
+                int minB = 10;
                 _backgroundWorker.DoWork += delegate
                 {
                     do
                     {
-                        StartAmbi(selectedScreen, _selectedLightsAmbi);
+                        StartAmbi(selectedScreen, _selectedLightsAmbi,minB);
                         GC.Collect();
                         Thread.Sleep(_timeInMiliSeconds);
                     } while (_isAmbiRunning);
@@ -275,12 +284,13 @@ namespace AmbiHue
 
         }
 
-        private void StartAmbi(Screen selectedScreen, List<Light> selectedLightsAmbi)
+
+        private void StartAmbi(Screen selectedScreen, List<Light> selectedLightsAmbi, int minB)
         {
             var colorRgb = CalculateAverageColor(ScreenShot(selectedScreen));
             if (selectedLightsAmbi == null)
             {
-                if (colorRgb != Color.Black)
+                if (colorRgb.B > minB)
                 {
                     SetAllLightsToColorHsl(colorRgb);
                 }
@@ -291,7 +301,7 @@ namespace AmbiHue
             }
             else
             {
-                if (colorRgb != Color.Black)
+                if (colorRgb.B > minB)
                 {
                     SetListLightsToColorHsl(colorRgb, selectedLightsAmbi);
                 }
@@ -452,7 +462,7 @@ namespace AmbiHue
 
         private void UpdateLabelAmbiSeconds()
         {
-            labelAmbiSeconds.Text = string.Format("Time between changes: {0} ms", trackBarAmbiSeconds.Value * 500);
+            UpdateLabelAmbiSeconds(true);
         }
 
         private void userOverviewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -482,6 +492,29 @@ namespace AmbiHue
             _selectedLightsAmbi = formLightSelect.Lights;
 
             listBoxSelectedLights.DataSource = _selectedLightsAmbi;
+        }
+
+        private void checkBoxDisableDelay_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxDisableDelay.Checked)
+            {
+                trackBarAmbiSeconds.Enabled = false;
+                UpdateLabelAmbiSeconds(false);
+            }
+            else
+            {
+                trackBarAmbiSeconds.Enabled = true;
+                UpdateLabelAmbiSeconds(true);
+            }
+        }
+
+        private void UpdateLabelAmbiSeconds(bool hasDelay)
+        {
+            var delay = 0;
+            if (hasDelay)
+                delay = trackBarAmbiSeconds.Value * 500;
+
+            labelAmbiSeconds.Text = string.Format("Time between changes: {0} ms", delay);
         }
     }
 }

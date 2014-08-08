@@ -33,6 +33,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bridgeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.searchForNewLightsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userOverviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.unpairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,6 +50,8 @@
             this.buttonAmbiStop = new System.Windows.Forms.Button();
             this.tabControlHuePages = new System.Windows.Forms.TabControl();
             this.tabPageAmbi = new System.Windows.Forms.TabPage();
+            this.listBoxSelectedLights = new System.Windows.Forms.ListBox();
+            this.buttonSelectLights = new System.Windows.Forms.Button();
             this.labelAmbiSeconds = new System.Windows.Forms.Label();
             this.trackBarAmbiSeconds = new System.Windows.Forms.TrackBar();
             this.tabPageLightControl = new System.Windows.Forms.TabPage();
@@ -61,10 +65,7 @@
             this.tabPageCustom = new System.Windows.Forms.TabPage();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.buttonColorLoop = new System.Windows.Forms.Button();
-            this.searchForNewLightsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonSelectLights = new System.Windows.Forms.Button();
-            this.listBoxSelectedLights = new System.Windows.Forms.ListBox();
+            this.checkBoxDisableDelay = new System.Windows.Forms.CheckBox();
             this.menuStripMain.SuspendLayout();
             this.tabControlHuePages.SuspendLayout();
             this.tabPageAmbi.SuspendLayout();
@@ -120,6 +121,18 @@
             this.pairToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.pairToolStripMenuItem.Text = "&Pair";
             this.pairToolStripMenuItem.Click += new System.EventHandler(this.pairToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(181, 6);
+            // 
+            // searchForNewLightsToolStripMenuItem
+            // 
+            this.searchForNewLightsToolStripMenuItem.Name = "searchForNewLightsToolStripMenuItem";
+            this.searchForNewLightsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.searchForNewLightsToolStripMenuItem.Text = "Search for new lights";
+            this.searchForNewLightsToolStripMenuItem.Click += new System.EventHandler(this.searchForNewLightsToolStripMenuItem_Click);
             // 
             // userOverviewToolStripMenuItem
             // 
@@ -248,6 +261,7 @@
             // 
             // tabPageAmbi
             // 
+            this.tabPageAmbi.Controls.Add(this.checkBoxDisableDelay);
             this.tabPageAmbi.Controls.Add(this.listBoxSelectedLights);
             this.tabPageAmbi.Controls.Add(this.buttonSelectLights);
             this.tabPageAmbi.Controls.Add(this.labelAmbiSeconds);
@@ -263,6 +277,26 @@
             this.tabPageAmbi.TabIndex = 0;
             this.tabPageAmbi.Text = "Ambi Control";
             this.tabPageAmbi.UseVisualStyleBackColor = true;
+            // 
+            // listBoxSelectedLights
+            // 
+            this.listBoxSelectedLights.FormattingEnabled = true;
+            this.listBoxSelectedLights.Location = new System.Drawing.Point(208, 67);
+            this.listBoxSelectedLights.Name = "listBoxSelectedLights";
+            this.listBoxSelectedLights.Size = new System.Drawing.Size(185, 186);
+            this.listBoxSelectedLights.TabIndex = 13;
+            // 
+            // buttonSelectLights
+            // 
+            this.buttonSelectLights.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSelectLights.ForeColor = System.Drawing.Color.DarkGoldenrod;
+            this.buttonSelectLights.Location = new System.Drawing.Point(107, 38);
+            this.buttonSelectLights.Name = "buttonSelectLights";
+            this.buttonSelectLights.Size = new System.Drawing.Size(95, 68);
+            this.buttonSelectLights.TabIndex = 12;
+            this.buttonSelectLights.Text = "Select Lights";
+            this.buttonSelectLights.UseVisualStyleBackColor = true;
+            this.buttonSelectLights.Click += new System.EventHandler(this.buttonSelectLights_Click);
             // 
             // labelAmbiSeconds
             // 
@@ -386,37 +420,16 @@
             this.buttonColorLoop.UseVisualStyleBackColor = true;
             this.buttonColorLoop.Click += new System.EventHandler(this.buttonColorLoop_Click);
             // 
-            // searchForNewLightsToolStripMenuItem
+            // checkBoxDisableDelay
             // 
-            this.searchForNewLightsToolStripMenuItem.Name = "searchForNewLightsToolStripMenuItem";
-            this.searchForNewLightsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.searchForNewLightsToolStripMenuItem.Text = "Search for new lights";
-            this.searchForNewLightsToolStripMenuItem.Click += new System.EventHandler(this.searchForNewLightsToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(181, 6);
-            // 
-            // buttonSelectLights
-            // 
-            this.buttonSelectLights.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSelectLights.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.buttonSelectLights.Location = new System.Drawing.Point(107, 38);
-            this.buttonSelectLights.Name = "buttonSelectLights";
-            this.buttonSelectLights.Size = new System.Drawing.Size(95, 68);
-            this.buttonSelectLights.TabIndex = 12;
-            this.buttonSelectLights.Text = "Select Lights";
-            this.buttonSelectLights.UseVisualStyleBackColor = true;
-            this.buttonSelectLights.Click += new System.EventHandler(this.buttonSelectLights_Click);
-            // 
-            // listBoxSelectedLights
-            // 
-            this.listBoxSelectedLights.FormattingEnabled = true;
-            this.listBoxSelectedLights.Location = new System.Drawing.Point(208, 67);
-            this.listBoxSelectedLights.Name = "listBoxSelectedLights";
-            this.listBoxSelectedLights.Size = new System.Drawing.Size(185, 186);
-            this.listBoxSelectedLights.TabIndex = 13;
+            this.checkBoxDisableDelay.AutoSize = true;
+            this.checkBoxDisableDelay.Location = new System.Drawing.Point(399, 67);
+            this.checkBoxDisableDelay.Name = "checkBoxDisableDelay";
+            this.checkBoxDisableDelay.Size = new System.Drawing.Size(91, 17);
+            this.checkBoxDisableDelay.TabIndex = 14;
+            this.checkBoxDisableDelay.Text = "Disable Delay";
+            this.checkBoxDisableDelay.UseVisualStyleBackColor = true;
+            this.checkBoxDisableDelay.CheckedChanged += new System.EventHandler(this.checkBoxDisableDelay_CheckedChanged);
             // 
             // FormMain
             // 
@@ -486,6 +499,7 @@
         private System.Windows.Forms.ToolStripMenuItem searchForNewLightsToolStripMenuItem;
         private System.Windows.Forms.Button buttonSelectLights;
         private System.Windows.Forms.ListBox listBoxSelectedLights;
+        private System.Windows.Forms.CheckBox checkBoxDisableDelay;
 
     }
 }
