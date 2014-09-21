@@ -26,7 +26,7 @@ namespace AmbiHue
         private void FormNewUser_Load(object sender, EventArgs e)
         {
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            
+            textBoxID.Enabled = false;
         }
 
         private void buttonCreate_Click(object sender, EventArgs e)
@@ -36,12 +36,12 @@ namespace AmbiHue
 
                 if (textBoxID.Text == string.Empty)
                 {
-                    Configuration.CreateNewUser(textBoxName.Text);
+                    Configuration.AddUser(textBoxName.Text);
                 }
-                else
-                {
-                    Configuration.CreateNewUser(textBoxName.Text,textBoxID.Text);
-                }
+                //else
+                //{
+                //    Configuration.AddUser(textBoxName.Text, textBoxID.Text);
+                //}
                 
                 Close();
             }

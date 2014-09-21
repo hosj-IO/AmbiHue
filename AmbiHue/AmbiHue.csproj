@@ -58,16 +58,16 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Downloads\SharpHue-master\SharpHue-master\SharpHue\bin\Debug\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SharpHue, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SharpHue, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SharpHue\SharpHue\bin\Debug\SharpHue.dll</HintPath>
+      <HintPath>..\..\SharpHue\SharpHue\bin\Release\SharpHue.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -82,52 +82,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core.cs" />
-    <Compile Include="FormAbout.cs">
+    <Compile Include="Classes\Core.cs" />
+    <Compile Include="Forms\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormAbout.Designer.cs">
+    <Compile Include="Forms\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormConfiguration.cs">
+    <Compile Include="Forms\FormConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormConfiguration.Designer.cs">
+    <Compile Include="Forms\FormConfiguration.Designer.cs">
       <DependentUpon>FormConfiguration.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.cs">
+    <Compile Include="Forms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormNewUser.cs">
+    <Compile Include="Forms\FormNewUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormNewUser.Designer.cs">
+    <Compile Include="Forms\FormNewUser.Designer.cs">
       <DependentUpon>FormNewUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormUserOverview.cs">
+    <Compile Include="Forms\FormUserOverview.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormUserOverview.Designer.cs">
+    <Compile Include="Forms\FormUserOverview.Designer.cs">
       <DependentUpon>FormUserOverview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\LocalWhitelistItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormAbout.resx">
+    <EmbeddedResource Include="Forms\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormConfiguration.resx">
+    <EmbeddedResource Include="Forms\FormConfiguration.resx">
       <DependentUpon>FormConfiguration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="Forms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormNewUser.resx">
+    <EmbeddedResource Include="Forms\FormNewUser.resx">
       <DependentUpon>FormNewUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormUserOverview.resx">
+    <EmbeddedResource Include="Forms\FormUserOverview.resx">
       <DependentUpon>FormUserOverview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -174,6 +175,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
