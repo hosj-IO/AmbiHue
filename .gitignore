@@ -39,3 +39,4 @@ deploy/*
  
 *.svn
 .svn
+packages/
